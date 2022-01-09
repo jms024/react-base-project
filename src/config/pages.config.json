@@ -1,5 +1,10 @@
 [
   {
+    "name": "home",
+    "path": "/",
+    "label": "Dashboard"
+  },
+  {
     "name": "tables",
     "path": "/tables",
     "label": "Tables"
