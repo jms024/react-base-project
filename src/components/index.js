@@ -1,13 +1,14 @@
 import React from 'react';
-import { Grid } from '@mui/material';
 
 import MainContainer from "./MainContainer";
+import MainMenu from "./MainMenu";
 
 export default React.memo((props) => {
 
     return (
         <MainContainer>
-            { props.children }
+            <MainMenu/>
+            Hello
         </MainContainer>
     )
 })

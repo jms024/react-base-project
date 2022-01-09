@@ -24,7 +24,6 @@ const Container = styled.div`
 `;
 
 export default React.memo((props) => {
-
     return (
         <ThemeProvider theme={theme}>
             <Wrapper>
@@ -34,4 +33,4 @@ export default React.memo((props) => {
             </Wrapper>
         </ThemeProvider>
     )
-})
+});
