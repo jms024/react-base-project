@@ -20,12 +20,16 @@ export default () => {
 
     }
 
-    const update = () => {
-
+    const update = ({path, id, data}) => {
+        if (!path || !id || !data) return false
+        return instance.put(`/${path}`, data)
+            .then(({data}) => {
+                return data;
+            })
     }
 
     const remove = ({path, id}) => {
-        if (!path || !id) return
+        if (!path || !id) return false
         return instance.delete(`/${path}${id ? '/'+id : ''}`)
             .then(({data}) => {
                 return data;

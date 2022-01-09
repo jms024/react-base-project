@@ -24,9 +24,6 @@ export default React.memo((props) => {
     }
 
     const handleRowDelete = (datum, index) => {
-
-        console.log(datum, index)
-
         api.remove({path: 'tables', id: datum.id})
             .then(() => {
                 let newTables = [...tables];
