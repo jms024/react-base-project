@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import { LinearProgress } from "@mui/material";
 
 import useApi from "../../utils/useApi";
 import DataTable from "../DataTable";
@@ -37,7 +38,7 @@ export default React.memo((props) => {
             })
     }
 
-    if (!presenters) return <div>Loading...</div>
+    if (!presenters) return <LinearProgress />
 
     return (
         <Routes>
