@@ -8,11 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Avatar, Button, Tooltop, MenuItem }from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 
-const pages = [
-    {name: 'page1', path: '/page1', label: 'Page 1'},
-    {name: 'page2', path: '/page2', label: 'Page 2'},
-    {name: 'page3', path: '/page3', label: 'Page 3'}
-];
+import pages from '../config/pages.config.json';
 
 export default React.memo((props) => {
     const [activeTab, setActiveTab] = React.useState(null),

@@ -1,0 +1,12 @@
+[
+  {
+    "name": "tables",
+    "path": "/tables",
+    "label": "Tables"
+  },
+  {
+    "name": "presenters",
+    "path": "/presenters",
+    "label": "Presenters"
+  }
+]
