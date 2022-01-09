@@ -12,7 +12,7 @@ const getNewUrl = (currentPath, itemId) => {
 }
 
 export default React.memo((props) => {
-    const { apiUrl, initialValues, children } = props,
+    const { apiUrl, initialValues, children, validate } = props,
         location = useLocation(),
         navigate = useNavigate(),
         api = useApi();
@@ -34,7 +34,8 @@ export default React.memo((props) => {
     return (
         <Form
             onSubmit={handleSubmit}
-            initialValues={initialValues}>
+            initialValues={initialValues}
+            validate={validate}>
             {(props) => (
                 <form onSubmit={props.handleSubmit}>
                     {children}

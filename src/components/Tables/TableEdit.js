@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import useApi from "../../utils/useApi";
 import TableFields from "./TableFields";
 import EditPage from "../EditPage";
+import tableValidation from "./tableValidation";
 
 export default React.memo((props) => {
     const [tableData, setTableData] = useState(null),
@@ -17,7 +18,10 @@ export default React.memo((props) => {
     }, [])
 
     return (
-        <EditPage data={tableData} submitPath={`tables/${tableId}`}>
+        <EditPage
+            data={tableData}
+            submitPath={`tables/${tableId}`}
+            validate={tableValidation}>
             <TableFields />
         </EditPage>
     )
