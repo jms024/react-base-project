@@ -18,8 +18,8 @@ export default React.memo((props) => {
             <MainContainer>
                 <Routes>
                     <Route path="/" element={<div>Hello</div>} />
-                    <Route path="tables" element={<Tables />} />
-                    <Route path="presenters" element={<Presenters />} />
+                    <Route path="tables/*" element={<Tables />} />
+                    <Route path="presenters/*" element={<Presenters />} />
                 </Routes>
             </MainContainer>
         </Wrapper>
