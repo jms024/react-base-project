@@ -24,8 +24,12 @@ export default () => {
 
     }
 
-    const remove = () => {
-
+    const remove = ({path, id}) => {
+        if (!path || !id) return
+        return instance.delete(`/${path}${id ? '/'+id : ''}`)
+            .then(({data}) => {
+                return data;
+            })
     }
 
     return {

@@ -13,7 +13,7 @@ export default React.memo((props) => {
 
     useEffect(() => {
         // Get list of tables
-        api.get({path: 'presenters'})
+        api.get({path: 'tables'})
             .then((data) => {
                 setTables(data);
             })
@@ -24,7 +24,15 @@ export default React.memo((props) => {
     }
 
     const handleRowDelete = (datum, index) => {
+
         console.log(datum, index)
+
+        api.remove({path: 'tables', id: datum.id})
+            .then(() => {
+                let newTables = [...tables];
+                newTables.splice(index, 1);
+                setTables(newTables);
+            })
     }
 
     if (!tables) return <div>Loading...</div>
@@ -38,6 +46,5 @@ export default React.memo((props) => {
                 onRowDelete={handleRowDelete}/>}/>
             <Route path="/*" element={<TableEdit />}/>
         </Routes>
-
     )
 })
