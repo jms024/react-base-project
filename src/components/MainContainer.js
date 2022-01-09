@@ -9,7 +9,6 @@ const Wrapper = styled.div`
 `;
 
 const Container = styled.div`
-    color: ${(props) => props.theme.color.main};
     width: ${(props) => props.theme.size.xs};
                 
     @media ${(props) => props.theme.breakpoint.sm}{
