@@ -13,3 +13,6 @@
 
 ### Who do I talk to? ###
 
+NOTES:
+Mock API: https://mockapi.io/projects/61da1382ce86530017e3ccd0
+
