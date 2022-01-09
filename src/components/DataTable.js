@@ -1,11 +1,18 @@
 import React from 'react';
-import {TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Typography,
-    IconButton } from '@mui/material';
+import {TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Typography, IconButton,
+    Button } from '@mui/material';
 import inflection from 'inflection';
 import DeleteIcon from '@mui/icons-material/Delete';
+import styled from 'styled-components';
+
+const ButtonWrapper = styled.div`
+    display: flex;
+    padding: ${(props) => props.theme.spacing};
+    justify-content: flex-end;
+`
 
 export default React.memo((props) => {
-    const { data, title, onRowClick=null, onRowDelete=null } = props,
+    const { data, title, onRowClick=null, onRowDelete=null, onAddRow=null } = props,
         tableHeads = Object.keys(data[0]);
 
     const handleRowClick = (datum, index) => {
@@ -18,9 +25,14 @@ export default React.memo((props) => {
         onRowDelete(datum, index)
     }
 
+    const handleAddRowClick = () => {
+        if (!onAddRow) return;
+        onAddRow();
+    }
+
     return (
         <TableContainer>
-            <Typography variant="h3">{title}</Typography>
+            <Typography variant="h4">{title}</Typography>
             <Table>
                 <TableHead>
                     <TableRow>
@@ -60,6 +72,9 @@ export default React.memo((props) => {
                     )) }
                 </TableBody>
             </Table>
+            <ButtonWrapper>
+                <Button onClick={handleAddRowClick}>Add</Button>
+            </ButtonWrapper>
         </TableContainer>
     )
 })

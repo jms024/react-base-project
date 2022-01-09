@@ -15,5 +15,6 @@ export default {
         sm: `(min-width: ${size.sm})`,
         md: `(min-width: ${size.md})`,
         lg: `(min-width: ${size.lg})`
-    }
+    },
+    spacing: '16px'
 }

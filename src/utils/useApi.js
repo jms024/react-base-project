@@ -3,7 +3,6 @@ import axios from 'axios';
 import config from '../config/app/app-config-APP_TARGET';
 
 export default () => {
-
     const instance = axios.create({
         baseURL: config.apiUrl
     });
@@ -16,8 +15,12 @@ export default () => {
             })
     }
 
-    const create = () =>{
-
+    const create = ({path, data}) =>{
+        if (!path || !data) return false
+        return instance.post(`/${path}`, data)
+            .then(({data}) => {
+                return data;
+            })
     }
 
     const update = ({path, id, data}) => {

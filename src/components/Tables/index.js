@@ -4,6 +4,7 @@ import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import useApi from "../../utils/useApi";
 import DataTable from "../DataTable";
 import TableEdit from "./TableEdit";
+import TableCreate from "./TableCreate";
 
 export default React.memo((props) => {
     const [tables, setTables] = useState(null),
@@ -19,8 +20,12 @@ export default React.memo((props) => {
             })
     }, [])
 
+    const handleAddClick = () => {
+        navigate(`${location.pathname}/new`);
+    }
+
     const handleRowClick = (datum) => {
-        navigate(`${location.pathname}/${datum.id}`)
+        navigate(`${location.pathname}/${datum.id}`);
     }
 
     const handleRowDelete = (datum, index) => {
@@ -36,11 +41,15 @@ export default React.memo((props) => {
 
     return (
         <Routes>
-            <Route path="/" element={<DataTable
-                data={tables}
-                title="List of game tables"
-                onRowClick={handleRowClick}
-                onRowDelete={handleRowDelete}/>}/>
+            <Route path="/" element={
+                <DataTable
+                    data={tables}
+                    title="List of game tables"
+                    onRowClick={handleRowClick}
+                    onRowDelete={handleRowDelete}
+                    onAddRow={handleAddClick} />
+            } />
+            <Route path="/new" element={<TableCreate />}/>
             <Route path="/*" element={<TableEdit />}/>
         </Routes>
     )
