@@ -1,7 +1,5 @@
 import React from 'react';
-import styled, {ThemeProvider} from 'styled-components';
-
-import theme from '../style/theme';
+import styled from 'styled-components';
 
 const Wrapper = styled.div`
     display: flex;
@@ -24,12 +22,10 @@ const Container = styled.div`
 
 export default React.memo((props) => {
     return (
-        <ThemeProvider theme={theme}>
-            <Wrapper>
-                <Container>
-                    {props.children}
-                </Container>
-            </Wrapper>
-        </ThemeProvider>
+        <Wrapper>
+            <Container>
+                {props.children}
+            </Container>
+        </Wrapper>
     )
 });

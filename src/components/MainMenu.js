@@ -7,8 +7,24 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppBar, Box, Toolbar, IconButton, Typography, Menu, Button,  MenuItem }from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import styled from 'styled-components';
 
 import pages from '../config/pages.config.json';
+
+const StyledToolbar = styled(Toolbar)`
+    align-self: center;
+    width: ${(props) => props.theme.size.xs};
+                
+    @media ${(props) => props.theme.breakpoint.sm}{
+        width: ${(props) => props.theme.size.sm};
+    }
+    @media ${(props) => props.theme.breakpoint.md}{
+        width: ${(props) => props.theme.size.md};
+    }
+    @media ${(props) => props.theme.breakpoint.lg}{
+        width: ${(props) => props.theme.size.lg};
+    }
+`;
 
 export default React.memo((props) => {
     const [activeTab, setActiveTab] = React.useState(null),
@@ -30,7 +46,7 @@ export default React.memo((props) => {
 
     return (
         <AppBar>
-            <Toolbar>
+            <StyledToolbar>
                 <Box sx={{ display: { xs: 'block', md: 'none' } }}>
                     <IconButton
                         size="large"
@@ -62,7 +78,7 @@ export default React.memo((props) => {
                         </Button>
                     )) }
                 </Box>
-            </Toolbar>
+            </StyledToolbar>
         </AppBar>
     )
 })
