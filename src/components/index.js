@@ -2,6 +2,7 @@ import React from 'react';
 import { Routes, Route } from "react-router-dom";
 import styled, {ThemeProvider} from 'styled-components';
 
+import Dashboard from "./Dashboard";
 import MainContainer from "./MainContainer";
 import MainMenu from "./MainMenu";
 import Tables from "./Tables";
@@ -19,7 +20,7 @@ export default React.memo((props) => {
                 <MainMenu/>
                 <MainContainer>
                     <Routes>
-                        <Route path="/" element={<div>Hello</div>} />
+                        <Route path="/" element={<Dashboard />} />
                         <Route path="tables/*" element={<Tables />} />
                         <Route path="presenters/*" element={<Presenters />} />
                     </Routes>

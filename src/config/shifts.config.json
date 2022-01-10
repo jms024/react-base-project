@@ -1,14 +1,17 @@
-{
-  "morning": {
+[
+  {
+    "category": "morning",
     "from": "07:00",
     "to": "15:00"
   },
-  "afternoon": {
+  {
+    "category": "afternoon",
     "from": "15:00",
     "to": "23:00"
   },
-  "night": {
+  {
+    "category": "night",
     "from": "23:00",
     "to": "07:00"
   }
-}
+]
