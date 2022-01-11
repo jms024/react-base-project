@@ -1,9 +1,8 @@
 import React from 'react';
-import {TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Typography, IconButton,
-    Button } from '@mui/material';
-import inflection from 'inflection';
-import DeleteIcon from '@mui/icons-material/Delete';
-import styled from 'styled-components';
+import { Button, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import inflection from "inflection";
+import DeleteIcon from "@mui/icons-material/Delete";
+import styled from "styled-components";
 
 const ButtonWrapper = styled.div`
     display: flex;
@@ -12,34 +11,17 @@ const ButtonWrapper = styled.div`
 `
 
 export default React.memo((props) => {
-    const { data, title, onRowClick=null, onRowDelete=null, onAddRow=null } = props,
-        tableHeads = Object.keys(data[0]);
-
-    const handleRowClick = (datum, index) => {
-        if (!onRowClick) return;
-        onRowClick(datum, index)
-    }
-
-    const handleRowDelete = (datum, index) => {
-        if (!onRowDelete) return;
-        onRowDelete(datum, index)
-    }
-
-    const handleAddRowClick = () => {
-        if (!onAddRow) return;
-        onAddRow();
-    }
+    const { tableHeads, data, onRowClick, onAddClick, onDeleteClick } = props;
 
     return (
         <TableContainer>
-            <Typography variant="h4">{title}</Typography>
             <Table>
                 <TableHead>
                     <TableRow>
                         { tableHeads.map((label) => (
                             <TableCell key={label}>{ inflection.humanize(label) }</TableCell>
                         )) }
-                        { onRowDelete
+                        { onDeleteClick
                             ? <TableCell key={'delete'}>&nbsp;</TableCell>
                             : null }
                     </TableRow>
@@ -49,20 +31,20 @@ export default React.memo((props) => {
                         <TableRow
                             key={index}
                             hover
-                            onClick={() => handleRowClick(datum, index)}>
+                            onClick={() => onRowClick(datum, index)}>
                             { tableHeads.map((column) => (
                                 <TableCell key={column}>
                                     { datum[column] }
                                 </TableCell>
                             )) }
-                            { onRowDelete
+                            { onDeleteClick
                                 ? <TableCell key={`delete-${index}`}>
                                     <IconButton
                                         size="small"
                                         onClick={(e) => {
                                             e.stopPropagation();
                                             e.preventDefault();
-                                            handleRowDelete(datum, index)
+                                            onDeleteClick(datum, index)
                                         }}>
                                         <DeleteIcon fontSize="small"/>
                                     </IconButton>
@@ -73,7 +55,7 @@ export default React.memo((props) => {
                 </TableBody>
             </Table>
             <ButtonWrapper>
-                <Button onClick={handleAddRowClick}>Add</Button>
+                <Button onClick={onAddClick}>Add</Button>
             </ButtonWrapper>
         </TableContainer>
     )
