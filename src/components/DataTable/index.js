@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {Button, Paper, Typography} from '@mui/material';
 import styled from 'styled-components';
+import { useSelector } from "react-redux";
 
 import ViewSelector from './ViewSelector';
 import ListView from './ListView';
@@ -17,9 +18,9 @@ const ButtonWrapper = styled.div`
 `
 
 export default React.memo((props) => {
-    const [view, setView] = useState('list'),
-        { data, title, onRowClick=null, onRowDelete=null, onAddRow=null } = props,
-        tableHeads = Object.keys(data[0]);
+    const { data, title, onRowClick=null, onRowDelete=null, onAddRow=null } = props,
+        tableHeads = Object.keys(data[0]),
+        view = useSelector((state) => state.dataViewReducer);
 
     const handleRowClick = (datum, index) => {
         if (!onRowClick) return;
@@ -45,7 +46,7 @@ export default React.memo((props) => {
 
     return (
         <StyledPaper>
-            <ViewSelector view={{set: setView, status: view}}/>
+            <ViewSelector />
             <Typography variant="h4" gutterBottom>{title}</Typography>
             { view === 'grid'
                 ? <GridView {...viewProps}/>
