@@ -2,13 +2,6 @@ import React from 'react';
 import { Button, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import inflection from "inflection";
 import DeleteIcon from "@mui/icons-material/Delete";
-import styled from "styled-components";
-
-const ButtonWrapper = styled.div`
-    display: flex;
-    padding: ${(props) => props.theme.spacing};
-    justify-content: flex-end;
-`
 
 export default React.memo((props) => {
     const { tableHeads, data, onRowClick, onAddClick, onDeleteClick } = props;
@@ -54,9 +47,6 @@ export default React.memo((props) => {
                     )) }
                 </TableBody>
             </Table>
-            <ButtonWrapper>
-                <Button onClick={onAddClick}>Add</Button>
-            </ButtonWrapper>
         </TableContainer>
     )
 })

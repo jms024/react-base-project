@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Paper, Typography } from '@mui/material';
+import {Button, Paper, Typography} from '@mui/material';
 import styled from 'styled-components';
 
 import ViewSelector from './ViewSelector';
@@ -8,6 +8,12 @@ import GridView from './GridView';
 
 const StyledPaper = styled(Paper)`
     padding: ${(props) => props.theme.spacing};
+`
+
+const ButtonWrapper = styled.div`
+    display: flex;
+    padding: ${(props) => props.theme.spacing};
+    justify-content: flex-end;
 `
 
 export default React.memo((props) => {
@@ -32,7 +38,6 @@ export default React.memo((props) => {
 
     const viewProps = {
         onRowClick: handleRowClick,
-        onAddClick: handleAddRowClick,
         onDeleteClick: handleRowDelete,
         tableHeads,
         data
@@ -45,6 +50,9 @@ export default React.memo((props) => {
             { view === 'grid'
                 ? <GridView {...viewProps}/>
                 : <ListView {...viewProps}/> }
+            <ButtonWrapper>
+                <Button onClick={handleAddRowClick}>Add</Button>
+            </ButtonWrapper>
         </StyledPaper>
     )
 })
