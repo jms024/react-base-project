@@ -38,7 +38,9 @@ export default () => {
     }, [])
 
     const generate = () => {
-        const tablesPerGroup = 4;
+        if (!tables || !presenters) {
+            return alert('No tables or presenters available');
+        }
 
         // Assign schedule for each table
         let tablesWithSchedule = [];
@@ -51,15 +53,22 @@ export default () => {
         })
 
         // Assign schedule for each presenter
+        const numOfPresentersPerShift = Math.floor(presenters.length/shifts.length);
         let currentShift = 'morning',
-            presentersWithSchedule = [];
+            presentersWithSchedule = [],
+            $i = 0;
         presenters.map((presenter) => {
             presentersWithSchedule.push({
                     ...presenter,
                     shift: currentShift,
                     timeSlots: deepCopyObject(timeSlots[currentShift])
                 });
-            currentShift = shuffleShifts(currentShift);
+
+            $i++;
+            if ($i === numOfPresentersPerShift) {
+                currentShift = shuffleShifts(currentShift);
+                $i = 0;
+            }
         })
 
         // Function to take care of presenters' array pointer while iterating
@@ -71,19 +80,23 @@ export default () => {
             presenterCounter++;
         }
 
+        let scheduleData = {
+            timeTable: [],
+            columns: []
+        };
+
         shifts.map((shift) => {
             const shiftTimeSlots = timeSlots[shift.category];
 
             // For each time slot
-            shiftTimeSlots.map(({from}) => {
+            shiftTimeSlots.map(({from, to}) => {
+                scheduleData.columns.push({from, to, label: `${from} - ${to}`});
 
                 // For each table
                 tablesWithSchedule.map((table) => {
                     let tTimeSlot = table.timeSlots.find((ts) => {
-                        return (from === ts.from && !ts.presenter)
+                        return ((from === ts.from) && !ts.presenter)
                     })
-
-                    if (!tTimeSlot) return;
 
                     // Find available Presenter
                     const findAvailablePresenter = () => {
@@ -91,43 +104,61 @@ export default () => {
                         handlePresenterCounter();
 
                         const pTimeSlot = presenter.timeSlots.find((ts) => {
-                            return (from === ts.from && !ts.table)
+                            return ((from === ts.from) && !ts.table)
                         })
                         if (!pTimeSlot) {
                             return findAvailablePresenter();
                         } else {
-                            return {pTimeSlot, presenterId: presenter.id}
+                            return {timeSlot: pTimeSlot, name: presenter.name, id: presenter.id}
                         }
                     }
-                    const { pTimeSlot, presenterId } = findAvailablePresenter();
+                    const presenter = findAvailablePresenter();
 
-                    if (pTimeSlot && tTimeSlot) {
-                        pTimeSlot.table = table.id;
-                        tTimeSlot.presenter = presenterId;
+                    if (presenter.timeSlot) {
+                        presenter.timeSlot.table = { id: table.id, name: table.name };
+                        tTimeSlot.presenter = presenter.id;
+
+                        scheduleData.timeTable.push({
+                            timeSlot: {from, to, label: `${from} - ${to}`},
+                            presenter: {id: presenter.id, name: presenter.name},
+                            table: {id: table.id, name: table.name}
+                        })
                     }
                 })
             })
         })
 
-        console.log('tablesWithSchedule');
-        console.log(tablesWithSchedule);
-        console.log('presentersWithSchedule');
-        console.log(presentersWithSchedule);
+        // Group data by presenter (row)
+        let tableData = {}
+        scheduleData.timeTable.map(({timeSlot, presenter, table}) => {
+            if (tableData[presenter.id]) {
+                tableData[presenter.id].schedule.push({timeSlot: timeSlot, table: {id: table.id, name: table.name}});
+            } else {
+                tableData[presenter.id] = {
+                    id: presenter.id,
+                    name: presenter.name,
+                    schedule: [{timeSlot: timeSlot, table: {id: table.id, name: table.name}}]
+                };
+            }
+        })
 
-        return {
-            tables: tablesWithSchedule,
-            presenters: presentersWithSchedule
-        }
+        // Sort presenter timeSlots
+        Object.values(tableData).map(({schedule}) => {
+            schedule.sort(( a, b ) => {
+                if ( a.timeSlot.from < b.timeSlot.from ){
+                    return -1;
+                }
+                if ( a.timeSlot.from > b.timeSlot.from ){
+                    return 1;
+                }
+                return 0;
+            });
+        })
 
-
-        // 3 game groups of 4 tables each (total tables: 12)
-        // 4 + 1 presenters per group, per shift
-        // (5 * 3) * 3 = At least 45 presenters needed
-
-
+        return {tableData, columns: scheduleData.columns};
     }
 
     return {
-        generate
+        generateShiftForDay: generate
     }
 }
