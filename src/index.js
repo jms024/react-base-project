@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { HashRouter as Router } from "react-router-dom";
-import config from './config/app/app-config-APP_TARGET';
+
+const config = require('./config/app.config.json');
 
 import Components from './components';
 
@@ -13,3 +14,5 @@ ReactDOM.render(
     <Router basename={config.basename}><Index /></Router>,
     document.getElementById('app')
 );
+
+module.hot.accept();

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import config from '../config/app/app-config-APP_TARGET';
+const config = require('../config/app.config.json');
 
 export default () => {
     const instance = axios.create({
