@@ -141,20 +141,6 @@ export default () => {
                 };
             }
         })
-
-        // Sort presenter timeSlots
-        Object.values(tableData).map(({schedule}) => {
-            schedule.sort(( a, b ) => {
-                if ( a.timeSlot.from < b.timeSlot.from ){
-                    return -1;
-                }
-                if ( a.timeSlot.from > b.timeSlot.from ){
-                    return 1;
-                }
-                return 0;
-            });
-        })
-
         return {tableData, columns: scheduleData.columns};
     }
 
